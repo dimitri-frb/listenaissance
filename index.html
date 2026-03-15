@@ -211,7 +211,7 @@
             margin-top: 6px;
         }
 
-        /* Items Section */
+        /* Lydia buttons */
         .lydia-btn {
             text-decoration: none;
             color: inherit;
@@ -242,6 +242,7 @@
             background: var(--dark-text);
         }
 
+        /* Items Section */
         .items-section {
             background: var(--cream);
         }
@@ -334,6 +335,290 @@
             background: var(--cream);
             padding: 4px 12px;
             border-radius: 20px;
+        }
+
+        /* Add to cart button */
+        .add-to-cart {
+            margin-top: 16px;
+            background: none;
+            border: 1.5px solid var(--accent);
+            color: var(--accent);
+            padding: 8px 20px;
+            border-radius: 24px;
+            font-family: 'Jost', sans-serif;
+            font-size: 13px;
+            font-weight: 400;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            width: 100%;
+        }
+
+        .add-to-cart:hover {
+            background: var(--accent);
+            color: var(--white);
+        }
+
+        .add-to-cart.added {
+            background: var(--soft-sage);
+            border-color: var(--soft-sage);
+            color: var(--white);
+        }
+
+        /* Floating Cart Button */
+        .cart-fab {
+            position: fixed;
+            bottom: 28px;
+            right: 28px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: var(--dark-text);
+            color: var(--white);
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+            z-index: 1000;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: none;
+        }
+
+        .cart-fab.visible {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .cart-fab:hover {
+            transform: scale(1.08);
+            box-shadow: 0 6px 28px rgba(0,0,0,0.3);
+        }
+
+        .cart-fab .cart-count {
+            position: absolute;
+            top: -4px;
+            right: -4px;
+            background: var(--accent);
+            color: var(--white);
+            font-size: 12px;
+            font-weight: 500;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        @keyframes cart-bounce {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+
+        .cart-fab.bounce {
+            animation: cart-bounce 0.35s ease;
+        }
+
+        /* Cart Drawer */
+        .cart-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(58, 53, 48, 0.4);
+            z-index: 1001;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .cart-overlay.open {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .cart-drawer {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: min(440px, 92vw);
+            height: 100%;
+            background: var(--white);
+            z-index: 1002;
+            transform: translateX(100%);
+            transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .cart-drawer.open {
+            transform: translateX(0);
+        }
+
+        .cart-header {
+            padding: 28px 28px 20px;
+            border-bottom: 1px solid var(--warm-beige);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .cart-header h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 26px;
+            font-weight: 400;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .cart-close {
+            background: none;
+            border: none;
+            font-size: 28px;
+            cursor: pointer;
+            color: var(--light-text);
+            padding: 4px;
+            transition: color 0.2s;
+        }
+
+        .cart-close:hover {
+            color: var(--dark-text);
+        }
+
+        .cart-items {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px 28px;
+        }
+
+        .cart-empty {
+            text-align: center;
+            color: var(--light-text);
+            padding: 60px 0;
+            font-size: 15px;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 0;
+            border-bottom: 1px solid var(--cream);
+        }
+
+        .cart-item-info {
+            flex: 1;
+        }
+
+        .cart-item-name {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 17px;
+            font-weight: 500;
+            color: var(--dark-text);
+        }
+
+        .cart-item-price {
+            font-size: 14px;
+            color: var(--accent);
+            margin-top: 2px;
+        }
+
+        .cart-item-remove {
+            background: none;
+            border: none;
+            color: var(--light-text);
+            font-size: 18px;
+            cursor: pointer;
+            padding: 4px 8px;
+            border-radius: 4px;
+            transition: color 0.2s, background 0.2s;
+            margin-left: 12px;
+        }
+
+        .cart-item-remove:hover {
+            color: #c0392b;
+            background: rgba(192, 57, 43, 0.08);
+        }
+
+        .cart-footer {
+            border-top: 2px solid var(--warm-beige);
+            padding: 24px 28px 28px;
+        }
+
+        .cart-total {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+
+        .cart-total-label {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 20px;
+            font-weight: 400;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .cart-total-value {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 28px;
+            font-weight: 600;
+            color: var(--accent);
+        }
+
+        .cart-payment-title {
+            font-size: 12px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--light-text);
+            margin-bottom: 16px;
+            text-align: center;
+        }
+
+        .cart-payment-options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .cart-pay-btn {
+            display: block;
+            text-align: center;
+            text-decoration: none;
+            padding: 14px 20px;
+            border-radius: 12px;
+            font-family: 'Jost', sans-serif;
+            font-size: 14px;
+            font-weight: 400;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            border: none;
+        }
+
+        .cart-pay-btn.primary {
+            background: var(--accent);
+            color: var(--white);
+        }
+
+        .cart-pay-btn.primary:hover {
+            background: var(--dark-text);
+        }
+
+        .cart-pay-btn.secondary {
+            background: var(--cream);
+            color: var(--dark-text);
+        }
+
+        .cart-pay-btn.secondary:hover {
+            background: var(--warm-beige);
+        }
+
+        .cart-pay-detail {
+            font-size: 11px;
+            color: var(--light-text);
+            text-align: center;
+            margin-top: 8px;
+            line-height: 1.5;
         }
 
         /* Everyday Essentials */
@@ -429,10 +714,50 @@
                 min-height: 90vh;
                 padding: 40px 20px;
             }
+
+            .cart-fab {
+                bottom: 20px;
+                right: 20px;
+            }
         }
     </style>
 </head>
 <body>
+
+    <!-- Floating Cart Button -->
+    <button class="cart-fab" id="cartFab" onclick="toggleCart()">
+        &#x1F6D2;
+        <span class="cart-count" id="cartCount">0</span>
+    </button>
+
+    <!-- Cart Overlay -->
+    <div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
+
+    <!-- Cart Drawer -->
+    <div class="cart-drawer" id="cartDrawer">
+        <div class="cart-header">
+            <h3>Votre panier</h3>
+            <button class="cart-close" onclick="toggleCart()">&times;</button>
+        </div>
+        <div class="cart-items" id="cartItems">
+            <div class="cart-empty" id="cartEmpty">Votre panier est vide</div>
+        </div>
+        <div class="cart-footer" id="cartFooter" style="display:none;">
+            <div class="cart-total">
+                <span class="cart-total-label">Total</span>
+                <span class="cart-total-value" id="cartTotal">0,00 &euro;</span>
+            </div>
+            <p class="cart-payment-title">Comment contribuer</p>
+            <div class="cart-payment-options">
+                <a href="https://pay.lydia.me/l?t=paolaf7eef" target="_blank" class="cart-pay-btn primary">Lydia &agrave; Paola &rarr;</a>
+                <a href="#" target="_blank" class="cart-pay-btn secondary" id="cartLydia2">Lydia &agrave; Sampi</a>
+                <div class="cart-pay-btn secondary" style="cursor:default;">
+                    Virement : FR76 4061 8803 6600 0403 8298 685
+                </div>
+            </div>
+            <p class="cart-pay-detail">BIC : BOUSFRPPXXX &middot; M. REPETTI-DEIANA ou Mme FARBER</p>
+        </div>
+    </div>
 
     <!-- Hero -->
     <section class="hero">
@@ -490,7 +815,7 @@
         <div class="category fade-in">
             <h3 class="category-title">Promenade &amp; Portage</h3>
             <div class="items-grid">
-                <div class="item-card">
+                <div class="item-card" data-name="Porte-b&eacute;b&eacute; Cybex Amya" data-price="139.95" data-qty="2">
                     <div class="item-icon">&#x1F9B6;</div>
                     <div class="item-name">Porte-b&eacute;b&eacute; Cybex Amya</div>
                     <div class="item-desc">Cybex Gold &ndash; s'adapte de la naissance &agrave; 3 ans, tissu mesh respirant, 4 positions</div>
@@ -498,8 +823,9 @@
                         <span class="item-price">139,95 &euro;</span>
                         <span class="item-qty">x2</span>
                     </div>
+                    <button class="add-to-cart" onclick="addToCart(this)">Ajouter au panier</button>
                 </div>
-                <div class="item-card">
+                <div class="item-card" data-name="Sac &agrave; langer" data-price="49.99" data-qty="1">
                     <div class="item-icon">&#x1F4BC;</div>
                     <div class="item-name">Sac &agrave; langer</div>
                     <div class="item-desc">En coton fleuri, compartiments int&eacute;rieurs et fermeture &eacute;clair</div>
@@ -507,6 +833,7 @@
                         <span class="item-price">49,99 &euro;</span>
                         <span class="item-qty">x1</span>
                     </div>
+                    <button class="add-to-cart" onclick="addToCart(this)">Ajouter au panier</button>
                 </div>
             </div>
         </div>
@@ -515,7 +842,7 @@
         <div class="category fade-in">
             <h3 class="category-title">Sommeil &amp; Confort</h3>
             <div class="items-grid">
-                <div class="item-card">
+                <div class="item-card" data-name="Gigoteuse Jollein" data-price="27.99" data-qty="2">
                     <div class="item-icon">&#x1F319;</div>
                     <div class="item-name">Gigoteuse Jollein</div>
                     <div class="item-desc">Sans manches 70cm, Velvet Oatmeal, certifi&eacute;e OEKO-TEX</div>
@@ -523,8 +850,9 @@
                         <span class="item-price">27,99 &euro;</span>
                         <span class="item-qty">x2</span>
                     </div>
+                    <button class="add-to-cart" onclick="addToCart(this)">Ajouter au panier</button>
                 </div>
-                <div class="item-card">
+                <div class="item-card" data-name="Draps 60x120" data-price="17.99" data-qty="1">
                     <div class="item-icon">&#x1F6CF;&#xFE0F;</div>
                     <div class="item-name">Draps 60x120</div>
                     <div class="item-desc">Bout'Chou &ndash; Lot de 2, coton BIO certifi&eacute; OEKO-TEX</div>
@@ -532,8 +860,9 @@
                         <span class="item-price">17,99 &euro;</span>
                         <span class="item-qty">x1</span>
                     </div>
+                    <button class="add-to-cart" onclick="addToCart(this)">Ajouter au panier</button>
                 </div>
-                <div class="item-card">
+                <div class="item-card" data-name="Coussin d'allaitement double" data-price="79.99" data-qty="1">
                     <div class="item-icon">&#x2601;&#xFE0F;</div>
                     <div class="item-name">Coussin d'allaitement double</div>
                     <div class="item-desc">Coussin de maternit&eacute; sp&eacute;cialement con&ccedil;u pour les jumeaux</div>
@@ -541,6 +870,7 @@
                         <span class="item-price">79,99 &euro;</span>
                         <span class="item-qty">x1</span>
                     </div>
+                    <button class="add-to-cart" onclick="addToCart(this)">Ajouter au panier</button>
                 </div>
             </div>
         </div>
@@ -549,7 +879,7 @@
         <div class="category fade-in">
             <h3 class="category-title">Repas</h3>
             <div class="items-grid">
-                <div class="item-card">
+                <div class="item-card" data-name="Kit Biberon Philips Avent" data-price="0" data-qty="1">
                     <div class="item-icon">&#x1F37C;</div>
                     <div class="item-name">Kit Biberon Philips Avent</div>
                     <div class="item-desc">Natural Response &ndash; kit complet</div>
@@ -557,8 +887,9 @@
                         <span class="item-price">&mdash;</span>
                         <span class="item-qty">x1</span>
                     </div>
+                    <button class="add-to-cart" onclick="addToCart(this)">Ajouter au panier</button>
                 </div>
-                <div class="item-card">
+                <div class="item-card" data-name="Machine &agrave; lait" data-price="278.90" data-qty="1">
                     <div class="item-icon">&#x2615;</div>
                     <div class="item-name">Machine &agrave; lait</div>
                     <div class="item-desc">Baby Brezza Formula Pro Advanced &ndash; pr&eacute;paration automatique</div>
@@ -566,8 +897,9 @@
                         <span class="item-price">278,90 &euro;</span>
                         <span class="item-qty">x1</span>
                     </div>
+                    <button class="add-to-cart" onclick="addToCart(this)">Ajouter au panier</button>
                 </div>
-                <div class="item-card">
+                <div class="item-card" data-name="Chaise haute Stokke" data-price="286.00" data-qty="2">
                     <div class="item-icon">&#x1FA91;</div>
                     <div class="item-name">Chaise haute Stokke</div>
                     <div class="item-desc">Tripp Trapp + Newborn Set</div>
@@ -575,8 +907,9 @@
                         <span class="item-price">286,00 &euro;</span>
                         <span class="item-qty">x2</span>
                     </div>
+                    <button class="add-to-cart" onclick="addToCart(this)">Ajouter au panier</button>
                 </div>
-                <div class="item-card">
+                <div class="item-card" data-name="Bavoirs Botanica" data-price="10.49" data-qty="5">
                     <div class="item-icon">&#x1F9F2;</div>
                     <div class="item-name">Bavoirs Botanica</div>
                     <div class="item-desc">Lot de 2 bavoirs, motif botanique</div>
@@ -584,6 +917,7 @@
                         <span class="item-price">10,49 &euro;</span>
                         <span class="item-qty">x5</span>
                     </div>
+                    <button class="add-to-cart" onclick="addToCart(this)">Ajouter au panier</button>
                 </div>
             </div>
         </div>
@@ -592,7 +926,7 @@
         <div class="category fade-in">
             <h3 class="category-title">&Eacute;quipement</h3>
             <div class="items-grid">
-                <div class="item-card">
+                <div class="item-card" data-name="Babyphone vid&eacute;o Philips" data-price="109.90" data-qty="1">
                     <div class="item-icon">&#x1F4F9;</div>
                     <div class="item-name">Babyphone vid&eacute;o Philips</div>
                     <div class="item-desc">Philips SCD882</div>
@@ -600,8 +934,9 @@
                         <span class="item-price">109,90 &euro;</span>
                         <span class="item-qty">x1</span>
                     </div>
+                    <button class="add-to-cart" onclick="addToCart(this)">Ajouter au panier</button>
                 </div>
-                <div class="item-card">
+                <div class="item-card" data-name="Transat BabyBj&ouml;rn" data-price="169.00" data-qty="2">
                     <div class="item-icon">&#x1F6CB;&#xFE0F;</div>
                     <div class="item-name">Transat BabyBj&ouml;rn</div>
                     <div class="item-desc">Bliss Coton matelass&eacute; classique, gris sable</div>
@@ -609,6 +944,7 @@
                         <span class="item-price">169,00 &euro;</span>
                         <span class="item-qty">x2</span>
                     </div>
+                    <button class="add-to-cart" onclick="addToCart(this)">Ajouter au panier</button>
                 </div>
             </div>
         </div>
@@ -617,7 +953,7 @@
         <div class="category fade-in">
             <h3 class="category-title">V&ecirc;tements &amp; Linge</h3>
             <div class="items-grid">
-                <div class="item-card">
+                <div class="item-card" data-name="Pyjamas" data-price="17.99" data-qty="6">
                     <div class="item-icon">&#x1F455;</div>
                     <div class="item-name">Pyjamas</div>
                     <div class="item-desc">Bout'Chou &ndash; Dors-bien &agrave; zip, molleton coton BIO GOTS</div>
@@ -625,8 +961,9 @@
                         <span class="item-price">17,99 &euro;</span>
                         <span class="item-qty">x6</span>
                     </div>
+                    <button class="add-to-cart" onclick="addToCart(this)">Ajouter au panier</button>
                 </div>
-                <div class="item-card">
+                <div class="item-card" data-name="Chaussettes" data-price="9.99" data-qty="4">
                     <div class="item-icon">&#x1F9E6;</div>
                     <div class="item-name">Chaussettes</div>
                     <div class="item-desc">Bout'Chou &ndash; Lot de 5 paires unies, coton BIO</div>
@@ -634,8 +971,9 @@
                         <span class="item-price">9,99 &euro;</span>
                         <span class="item-qty">x4</span>
                     </div>
+                    <button class="add-to-cart" onclick="addToCart(this)">Ajouter au panier</button>
                 </div>
-                <div class="item-card">
+                <div class="item-card" data-name="Langes" data-price="12.99" data-qty="10">
                     <div class="item-icon">&#x1F9F7;</div>
                     <div class="item-name">Langes</div>
                     <div class="item-desc">Bout'Chou &ndash; Lot de 2 imprim&eacute;s, gaze de coton BIO GOTS</div>
@@ -643,6 +981,7 @@
                         <span class="item-price">12,99 &euro;</span>
                         <span class="item-qty">x10</span>
                     </div>
+                    <button class="add-to-cart" onclick="addToCart(this)">Ajouter au panier</button>
                 </div>
             </div>
         </div>
@@ -651,7 +990,7 @@
         <div class="category fade-in">
             <h3 class="category-title">&Eacute;veil &amp; Jeux</h3>
             <div class="items-grid">
-                <div class="item-card">
+                <div class="item-card" data-name="Tapis d'&eacute;veil Petit Soleil" data-price="81.98" data-qty="1">
                     <div class="item-icon">&#x1F3B2;</div>
                     <div class="item-name">Tapis d'&eacute;veil Petit Soleil</div>
                     <div class="item-desc">Coton bio, ultra doux et molletonn&eacute;</div>
@@ -659,8 +998,9 @@
                         <span class="item-price">81,98 &euro;</span>
                         <span class="item-qty">x1</span>
                     </div>
+                    <button class="add-to-cart" onclick="addToCart(this)">Ajouter au panier</button>
                 </div>
-                <div class="item-card">
+                <div class="item-card" data-name="Livre d'&eacute;veil Botanica" data-price="17.49" data-qty="1">
                     <div class="item-icon">&#x1F4D6;</div>
                     <div class="item-name">Livre d'&eacute;veil Botanica</div>
                     <div class="item-desc">Livre sensoriel en tissu</div>
@@ -668,8 +1008,9 @@
                         <span class="item-price">17,49 &euro;</span>
                         <span class="item-qty">x1</span>
                     </div>
+                    <button class="add-to-cart" onclick="addToCart(this)">Ajouter au panier</button>
                 </div>
-                <div class="item-card">
+                <div class="item-card" data-name="Cube d'activit&eacute;s Sunlight" data-price="18.03" data-qty="1">
                     <div class="item-icon">&#x1F9E9;</div>
                     <div class="item-name">Cube d'activit&eacute;s Sunlight</div>
                     <div class="item-desc">Cube sensoriel avec miroir et anneaux</div>
@@ -677,6 +1018,7 @@
                         <span class="item-price">18,03 &euro;</span>
                         <span class="item-qty">x1</span>
                     </div>
+                    <button class="add-to-cart" onclick="addToCart(this)">Ajouter au panier</button>
                 </div>
             </div>
         </div>
@@ -697,7 +1039,7 @@
         <div class="category fade-in" style="margin-top: 56px;">
             <h3 class="category-title">Participations (tr&egrave;s) utiles</h3>
             <div class="items-grid">
-                <div class="item-card">
+                <div class="item-card" data-name="Participation nounou de nuit" data-price="120.00" data-qty="1">
                     <div class="item-icon">&#x1F31C;</div>
                     <div class="item-name">Participation nounou de nuit</div>
                     <div class="item-desc">1 nuit = 120 euros</div>
@@ -705,6 +1047,7 @@
                         <span class="item-price">120,00 &euro;</span>
                         <span class="item-qty">par nuit</span>
                     </div>
+                    <button class="add-to-cart" onclick="addToCart(this)">Ajouter au panier</button>
                 </div>
             </div>
         </div>
@@ -727,6 +1070,114 @@
         }, { threshold: 0.1 });
 
         document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+        // Cart logic
+        let cart = [];
+
+        function addToCart(btn) {
+            const card = btn.closest('.item-card');
+            const name = card.querySelector('.item-name').textContent;
+            const price = parseFloat(card.dataset.price);
+            const qty = parseInt(card.dataset.qty);
+            const totalPrice = price * qty;
+
+            const existing = cart.find(item => item.name === name);
+            if (existing) {
+                removeFromCart(name);
+                btn.textContent = 'Ajouter au panier';
+                btn.classList.remove('added');
+                return;
+            }
+
+            cart.push({ name, unitPrice: price, qty, totalPrice });
+            btn.textContent = '\u2713 Ajout\u00e9';
+            btn.classList.add('added');
+
+            updateCartUI();
+
+            // Bounce animation
+            const fab = document.getElementById('cartFab');
+            fab.classList.remove('bounce');
+            void fab.offsetWidth;
+            fab.classList.add('bounce');
+        }
+
+        function removeFromCart(name) {
+            cart = cart.filter(item => item.name !== name);
+
+            // Reset button state
+            document.querySelectorAll('.item-card').forEach(card => {
+                if (card.querySelector('.item-name').textContent === name) {
+                    const btn = card.querySelector('.add-to-cart');
+                    btn.textContent = 'Ajouter au panier';
+                    btn.classList.remove('added');
+                }
+            });
+
+            updateCartUI();
+        }
+
+        function updateCartUI() {
+            const fab = document.getElementById('cartFab');
+            const countEl = document.getElementById('cartCount');
+            const itemsEl = document.getElementById('cartItems');
+            const emptyEl = document.getElementById('cartEmpty');
+            const footerEl = document.getElementById('cartFooter');
+            const totalEl = document.getElementById('cartTotal');
+
+            // Update FAB
+            countEl.textContent = cart.length;
+            if (cart.length > 0) {
+                fab.classList.add('visible');
+            } else {
+                fab.classList.remove('visible');
+            }
+
+            // Update drawer items
+            const itemsHtml = cart.map(item => {
+                const priceText = item.unitPrice > 0
+                    ? (item.qty > 1
+                        ? item.totalPrice.toFixed(2).replace('.', ',') + ' \u20ac (' + item.qty + ' x ' + item.unitPrice.toFixed(2).replace('.', ',') + ' \u20ac)'
+                        : item.unitPrice.toFixed(2).replace('.', ',') + ' \u20ac')
+                    : 'Prix \u00e0 d\u00e9finir';
+                return '<div class="cart-item">' +
+                    '<div class="cart-item-info">' +
+                        '<div class="cart-item-name">' + item.name + '</div>' +
+                        '<div class="cart-item-price">' + priceText + '</div>' +
+                    '</div>' +
+                    '<button class="cart-item-remove" onclick="removeFromCart(\'' + item.name.replace(/'/g, "\\'") + '\')">&times;</button>' +
+                '</div>';
+            }).join('');
+
+            if (cart.length === 0) {
+                emptyEl.style.display = 'block';
+                footerEl.style.display = 'none';
+                itemsEl.innerHTML = '<div class="cart-empty">Votre panier est vide</div>';
+            } else {
+                emptyEl.style.display = 'none';
+                footerEl.style.display = 'block';
+                itemsEl.innerHTML = itemsHtml;
+
+                const total = cart.reduce((sum, item) => sum + item.totalPrice, 0);
+                totalEl.textContent = total.toFixed(2).replace('.', ',') + ' \u20ac';
+            }
+        }
+
+        function toggleCart() {
+            const overlay = document.getElementById('cartOverlay');
+            const drawer = document.getElementById('cartDrawer');
+            const isOpen = drawer.classList.contains('open');
+
+            if (isOpen) {
+                overlay.classList.remove('open');
+                drawer.classList.remove('open');
+                document.body.style.overflow = '';
+            } else {
+                overlay.classList.add('open');
+                drawer.classList.add('open');
+                document.body.style.overflow = 'hidden';
+            }
+        }
     </script>
 
 </body>
