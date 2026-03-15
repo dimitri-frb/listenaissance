@@ -1134,30 +1134,34 @@
             }
 
             // Update drawer items
-            const itemsHtml = cart.map(item => {
+            itemsEl.innerHTML = '';
+            cart.forEach((item, index) => {
                 const priceText = item.unitPrice > 0
                     ? (item.qty > 1
                         ? item.totalPrice.toFixed(2).replace('.', ',') + ' \u20ac (' + item.qty + ' x ' + item.unitPrice.toFixed(2).replace('.', ',') + ' \u20ac)'
                         : item.unitPrice.toFixed(2).replace('.', ',') + ' \u20ac')
                     : 'Prix \u00e0 d\u00e9finir';
-                return '<div class="cart-item">' +
-                    '<div class="cart-item-info">' +
-                        '<div class="cart-item-name">' + item.name + '</div>' +
-                        '<div class="cart-item-price">' + priceText + '</div>' +
-                    '</div>' +
-                    '<button class="cart-item-remove" onclick="removeFromCart(\'' + item.name.replace(/'/g, "\\'") + '\')">&times;</button>' +
-                '</div>';
-            }).join('');
+                const div = document.createElement('div');
+                div.className = 'cart-item';
+                div.innerHTML = '<div class="cart-item-info">' +
+                    '<div class="cart-item-name"></div>' +
+                    '<div class="cart-item-price">' + priceText + '</div>' +
+                    '</div>';
+                div.querySelector('.cart-item-name').textContent = item.name;
+                const removeBtn = document.createElement('button');
+                removeBtn.className = 'cart-item-remove';
+                removeBtn.innerHTML = '&times;';
+                removeBtn.addEventListener('click', function() { removeFromCart(item.name); });
+                div.appendChild(removeBtn);
+                itemsEl.appendChild(div);
+            });
+            const itemsHtml = '';
 
             if (cart.length === 0) {
-                emptyEl.style.display = 'block';
                 footerEl.style.display = 'none';
                 itemsEl.innerHTML = '<div class="cart-empty">Votre panier est vide</div>';
             } else {
-                emptyEl.style.display = 'none';
                 footerEl.style.display = 'block';
-                itemsEl.innerHTML = itemsHtml;
-
                 const total = cart.reduce((sum, item) => sum + item.totalPrice, 0);
                 totalEl.textContent = total.toFixed(2).replace('.', ',') + ' \u20ac';
             }
