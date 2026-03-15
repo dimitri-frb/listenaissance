@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notre Liste de Naissance</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --cream: #FAF6F1;
+            --warm-beige: #E8DDD3;
+            --soft-sage: #C5CFC0;
+            --muted-olive: #A3AE9E;
+            --warm-taupe: #B5A899;
+            --dark-text: #3A3530;
+            --medium-text: #6B6158;
+            --light-text: #8A7F74;
+            --accent: #C9A87C;
+            --white: #FFFFFF;
+        }
+
+        body {
+            font-family: 'Jost', sans-serif;
+            background: var(--cream);
+            color: var(--dark-text);
+            line-height: 1.7;
+            font-weight: 300;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 60px 24px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(ellipse at 30% 20%, rgba(201, 168, 124, 0.08) 0%, transparent 60%),
+                        radial-gradient(ellipse at 70% 80%, rgba(197, 207, 192, 0.1) 0%, transparent 60%);
+            pointer-events: none;
+        }
+
+        .hero-icon {
+            font-size: 48px;
+            margin-bottom: 32px;
+            opacity: 0.7;
+            letter-spacing: 16px;
+        }
+
+        .hero h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(36px, 6vw, 64px);
+            font-weight: 300;
+            letter-spacing: 6px;
+            text-transform: uppercase;
+            color: var(--dark-text);
+            margin-bottom: 12px;
+        }
+
+        .hero .subtitle {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(18px, 3vw, 26px);
+            font-weight: 300;
+            font-style: italic;
+            color: var(--light-text);
+            margin-bottom: 48px;
+        }
+
+        .hero-text {
+            max-width: 600px;
+            font-size: 16px;
+            color: var(--medium-text);
+            line-height: 1.9;
+            margin-bottom: 20px;
+        }
+
+        .hero-text p {
+            margin-bottom: 16px;
+        }
+
+        .divider {
+            width: 60px;
+            height: 1px;
+            background: var(--accent);
+            margin: 40px auto;
+        }
+
+        .scroll-hint {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            color: var(--light-text);
+            font-size: 12px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .scroll-hint span {
+            font-size: 18px;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(8px); }
+        }
+
+        /* Section Styles */
+        section {
+            padding: 80px 24px;
+        }
+
+        .section-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(28px, 4vw, 42px);
+            font-weight: 300;
+            text-align: center;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+            color: var(--dark-text);
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: var(--light-text);
+            margin-bottom: 48px;
+            font-style: italic;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 18px;
+        }
+
+        /* Contribute Section */
+        .contribute {
+            background: var(--white);
+        }
+
+        .contribute-content {
+            max-width: 560px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .contribute-text {
+            font-size: 16px;
+            color: var(--medium-text);
+            margin-bottom: 40px;
+            line-height: 1.9;
+        }
+
+        .payment-methods {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .payment-card {
+            background: var(--cream);
+            border-radius: 16px;
+            padding: 32px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .payment-card:hover {
+            transform: translateY(-2px);
+        }
+
+        .payment-card .label {
+            font-size: 11px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--light-text);
+            margin-bottom: 12px;
+        }
+
+        .payment-card .value {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 24px;
+            font-weight: 500;
+            color: var(--dark-text);
+        }
+
+        .payment-card .detail {
+            font-size: 14px;
+            color: var(--light-text);
+            margin-top: 6px;
+        }
+
+        /* Items Section */
+        .lydia-btn {
+            text-decoration: none;
+            color: inherit;
+            display: block;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .lydia-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+        }
+
+        .pay-cta {
+            display: inline-block;
+            margin-top: 16px;
+            background: var(--accent);
+            color: var(--white);
+            padding: 10px 28px;
+            border-radius: 24px;
+            font-size: 14px;
+            font-weight: 400;
+            letter-spacing: 1px;
+            transition: background 0.2s ease;
+        }
+
+        .lydia-btn:hover .pay-cta {
+            background: var(--dark-text);
+        }
+
+        .items-section {
+            background: var(--cream);
+        }
+
+        .items-intro {
+            text-align: center;
+            max-width: 560px;
+            margin: 0 auto 48px;
+            color: var(--medium-text);
+            font-size: 15px;
+            line-height: 1.8;
+        }
+
+        .category {
+            max-width: 900px;
+            margin: 0 auto 56px;
+        }
+
+        .category-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 22px;
+            font-weight: 400;
+            color: var(--dark-text);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 24px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--warm-beige);
+        }
+
+        .items-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 20px;
+        }
+
+        .item-card {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 28px;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .item-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.06);
+        }
+
+        .item-icon {
+            font-size: 32px;
+            margin-bottom: 16px;
+        }
+
+        .item-name {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 19px;
+            font-weight: 500;
+            color: var(--dark-text);
+            margin-bottom: 4px;
+        }
+
+        .item-desc {
+            font-size: 13px;
+            color: var(--light-text);
+            margin-bottom: 12px;
+            line-height: 1.6;
+        }
+
+        .item-meta {
+            margin-top: auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .item-price {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 20px;
+            font-weight: 500;
+            color: var(--accent);
+        }
+
+        .item-qty {
+            font-size: 12px;
+            color: var(--light-text);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            background: var(--cream);
+            padding: 4px 12px;
+            border-radius: 20px;
+        }
+
+        /* Everyday Essentials */
+        .essentials-note {
+            max-width: 900px;
+            margin: 0 auto;
+            background: var(--white);
+            border-radius: 16px;
+            padding: 32px;
+            text-align: center;
+        }
+
+        .essentials-note h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 22px;
+            font-weight: 400;
+            margin-bottom: 12px;
+        }
+
+        .essentials-note p {
+            color: var(--medium-text);
+            font-size: 14px;
+            line-height: 1.8;
+        }
+
+        .essentials-items {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .essentials-items span {
+            background: var(--cream);
+            padding: 8px 20px;
+            border-radius: 24px;
+            font-size: 14px;
+            color: var(--medium-text);
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--dark-text);
+            color: var(--warm-beige);
+            text-align: center;
+            padding: 60px 24px;
+        }
+
+        .footer-heart {
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+
+        .footer p {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 20px;
+            font-weight: 300;
+            font-style: italic;
+            max-width: 400px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* Fade-in Animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(24px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Mobile */
+        @media (max-width: 600px) {
+            section {
+                padding: 60px 20px;
+            }
+
+            .items-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .payment-card .value {
+                font-size: 20px;
+                word-break: break-all;
+            }
+
+            .hero {
+                min-height: 90vh;
+                padding: 40px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="hero-icon">&#x1F476; &#x1F476;</div>
+        <h1>Notre Liste de Naissance</h1>
+        <p class="subtitle"></p>
+        <div class="divider"></div>
+        <div class="hero-text">
+            <p>Nous attendons avec beaucoup de joie l'arriv&eacute;e de nos jumeaux pr&eacute;vue pour le mois de mai 2026.</p>
+            <p>Plut&ocirc;t qu'une liste de naissance traditionnelle, nous avons choisi de privil&eacute;gier une <strong>cagnotte</strong>.</p>
+            <p>Cela nous permettra de nous adapter au mieux aux besoins de nos b&eacute;b&eacute;s au fil des premiers mois, d'acheter les &eacute;quipements n&eacute;cessaires au bon moment et de nous offrir un peu d'aide durant les premi&egrave;res semaines.</p>
+            <p>Vous avez &eacute;t&eacute; tr&egrave;s nombreux &agrave; nous la demander, m&ecirc;me si votre pr&eacute;sence et votre attention comptent d&eacute;j&agrave; suffisamment pour nous.</p>
+        </div>
+        <div class="scroll-hint">
+            <span>&#x2193;</span>
+        </div>
+    </section>
+
+    <!-- Contribute -->
+    <section class="contribute">
+        <h2 class="section-title fade-in">Participer</h2>
+        <p class="section-subtitle fade-in">Pour celles et ceux qui souhaitent contribuer</p>
+        <div class="contribute-content fade-in">
+            <p class="contribute-text">Vous pouvez participer librement via les moyens suivants :</p>
+            <div class="payment-methods">
+                <a href="https://pay.lydia.me/l?t=paolaf7eef" class="payment-card lydia-btn" target="_blank">
+                    <p class="label">Lydia</p>
+                    <p class="value">Faire un Lydia &agrave; Paola</p>
+                    <p class="detail">0033634183669</p>
+                    <span class="pay-cta">Merci &rarr;</span>
+                </a>
+                <a href="#" class="payment-card lydia-btn" id="lydia2" target="_blank">
+                    <p class="label">Lydia</p>
+                    <p class="value">Faire un Lydia &agrave; Sampi</p>
+                    <p class="detail">0033781210608</p>
+                    <span class="pay-cta">Il vaut mieux le faire &agrave; Pao ^^</span>
+                </a>
+                <div class="payment-card">
+                    <p class="label">Virement bancaire</p>
+                    <p class="value">FR76 4061 8803 6600 0403 8298 685</p>
+                    <p class="detail">BIC : BOUSFRPPXXX</p>
+                    <p class="detail">M. REPETTI-DEIANA ou Mme FARBER</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Items List -->
+    <section class="items-section">
+        <h2 class="section-title fade-in">Ce que nous pr&eacute;voyons</h2>
+        <p class="section-subtitle fade-in">&Agrave; titre indicatif, voici les &eacute;quipements que nous souhaitons acqu&eacute;rir</p>
+        <p class="items-intro fade-in">Ces articles sont pr&eacute;sent&eacute;s pour vous donner une id&eacute;e de nos besoins. La cagnotte nous permettra de les acheter au meilleur moment.</p>
+
+        <!-- Promenade & Portage -->
+        <div class="category fade-in">
+            <h3 class="category-title">Promenade &amp; Portage</h3>
+            <div class="items-grid">
+                <div class="item-card">
+                    <div class="item-icon">&#x1F9B6;</div>
+                    <div class="item-name">Porte-b&eacute;b&eacute; Cybex Amya</div>
+                    <div class="item-desc">Cybex Gold &ndash; s'adapte de la naissance &agrave; 3 ans, tissu mesh respirant, 4 positions</div>
+                    <div class="item-meta">
+                        <span class="item-price">139,95 &euro;</span>
+                        <span class="item-qty">x2</span>
+                    </div>
+                </div>
+                <div class="item-card">
+                    <div class="item-icon">&#x1F4BC;</div>
+                    <div class="item-name">Sac &agrave; langer</div>
+                    <div class="item-desc">En coton fleuri, compartiments int&eacute;rieurs et fermeture &eacute;clair</div>
+                    <div class="item-meta">
+                        <span class="item-price">49,99 &euro;</span>
+                        <span class="item-qty">x1</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sommeil -->
+        <div class="category fade-in">
+            <h3 class="category-title">Sommeil &amp; Confort</h3>
+            <div class="items-grid">
+                <div class="item-card">
+                    <div class="item-icon">&#x1F319;</div>
+                    <div class="item-name">Gigoteuse Jollein</div>
+                    <div class="item-desc">Sans manches 70cm, Velvet Oatmeal, certifi&eacute;e OEKO-TEX</div>
+                    <div class="item-meta">
+                        <span class="item-price">27,99 &euro;</span>
+                        <span class="item-qty">x2</span>
+                    </div>
+                </div>
+                <div class="item-card">
+                    <div class="item-icon">&#x1F6CF;&#xFE0F;</div>
+                    <div class="item-name">Draps 60x120</div>
+                    <div class="item-desc">Bout'Chou &ndash; Lot de 2, coton BIO certifi&eacute; OEKO-TEX</div>
+                    <div class="item-meta">
+                        <span class="item-price">17,99 &euro;</span>
+                        <span class="item-qty">x1</span>
+                    </div>
+                </div>
+                <div class="item-card">
+                    <div class="item-icon">&#x2601;&#xFE0F;</div>
+                    <div class="item-name">Coussin d'allaitement double</div>
+                    <div class="item-desc">Coussin de maternit&eacute; sp&eacute;cialement con&ccedil;u pour les jumeaux</div>
+                    <div class="item-meta">
+                        <span class="item-price">79,99 &euro;</span>
+                        <span class="item-qty">x1</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Repas -->
+        <div class="category fade-in">
+            <h3 class="category-title">Repas</h3>
+            <div class="items-grid">
+                <div class="item-card">
+                    <div class="item-icon">&#x1F37C;</div>
+                    <div class="item-name">Kit Biberon Philips Avent</div>
+                    <div class="item-desc">Natural Response &ndash; kit complet</div>
+                    <div class="item-meta">
+                        <span class="item-price">&mdash;</span>
+                        <span class="item-qty">x1</span>
+                    </div>
+                </div>
+                <div class="item-card">
+                    <div class="item-icon">&#x2615;</div>
+                    <div class="item-name">Machine &agrave; lait</div>
+                    <div class="item-desc">Baby Brezza Formula Pro Advanced &ndash; pr&eacute;paration automatique</div>
+                    <div class="item-meta">
+                        <span class="item-price">278,90 &euro;</span>
+                        <span class="item-qty">x1</span>
+                    </div>
+                </div>
+                <div class="item-card">
+                    <div class="item-icon">&#x1FA91;</div>
+                    <div class="item-name">Chaise haute Stokke</div>
+                    <div class="item-desc">Tripp Trapp + Newborn Set</div>
+                    <div class="item-meta">
+                        <span class="item-price">286,00 &euro;</span>
+                        <span class="item-qty">x2</span>
+                    </div>
+                </div>
+                <div class="item-card">
+                    <div class="item-icon">&#x1F9F2;</div>
+                    <div class="item-name">Bavoirs Botanica</div>
+                    <div class="item-desc">Lot de 2 bavoirs, motif botanique</div>
+                    <div class="item-meta">
+                        <span class="item-price">10,49 &euro;</span>
+                        <span class="item-qty">x5</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Equipement -->
+        <div class="category fade-in">
+            <h3 class="category-title">&Eacute;quipement</h3>
+            <div class="items-grid">
+                <div class="item-card">
+                    <div class="item-icon">&#x1F4F9;</div>
+                    <div class="item-name">Babyphone vid&eacute;o Philips</div>
+                    <div class="item-desc">Philips SCD882</div>
+                    <div class="item-meta">
+                        <span class="item-price">109,90 &euro;</span>
+                        <span class="item-qty">x1</span>
+                    </div>
+                </div>
+                <div class="item-card">
+                    <div class="item-icon">&#x1F6CB;&#xFE0F;</div>
+                    <div class="item-name">Transat BabyBj&ouml;rn</div>
+                    <div class="item-desc">Bliss Coton matelass&eacute; classique, gris sable</div>
+                    <div class="item-meta">
+                        <span class="item-price">169,00 &euro;</span>
+                        <span class="item-qty">x2</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Vetements -->
+        <div class="category fade-in">
+            <h3 class="category-title">V&ecirc;tements &amp; Linge</h3>
+            <div class="items-grid">
+                <div class="item-card">
+                    <div class="item-icon">&#x1F455;</div>
+                    <div class="item-name">Pyjamas</div>
+                    <div class="item-desc">Bout'Chou &ndash; Dors-bien &agrave; zip, molleton coton BIO GOTS</div>
+                    <div class="item-meta">
+                        <span class="item-price">17,99 &euro;</span>
+                        <span class="item-qty">x6</span>
+                    </div>
+                </div>
+                <div class="item-card">
+                    <div class="item-icon">&#x1F9E6;</div>
+                    <div class="item-name">Chaussettes</div>
+                    <div class="item-desc">Bout'Chou &ndash; Lot de 5 paires unies, coton BIO</div>
+                    <div class="item-meta">
+                        <span class="item-price">9,99 &euro;</span>
+                        <span class="item-qty">x4</span>
+                    </div>
+                </div>
+                <div class="item-card">
+                    <div class="item-icon">&#x1F9F7;</div>
+                    <div class="item-name">Langes</div>
+                    <div class="item-desc">Bout'Chou &ndash; Lot de 2 imprim&eacute;s, gaze de coton BIO GOTS</div>
+                    <div class="item-meta">
+                        <span class="item-price">12,99 &euro;</span>
+                        <span class="item-qty">x10</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Eveil -->
+        <div class="category fade-in">
+            <h3 class="category-title">&Eacute;veil &amp; Jeux</h3>
+            <div class="items-grid">
+                <div class="item-card">
+                    <div class="item-icon">&#x1F3B2;</div>
+                    <div class="item-name">Tapis d'&eacute;veil Petit Soleil</div>
+                    <div class="item-desc">Coton bio, ultra doux et molletonn&eacute;</div>
+                    <div class="item-meta">
+                        <span class="item-price">81,98 &euro;</span>
+                        <span class="item-qty">x1</span>
+                    </div>
+                </div>
+                <div class="item-card">
+                    <div class="item-icon">&#x1F4D6;</div>
+                    <div class="item-name">Livre d'&eacute;veil Botanica</div>
+                    <div class="item-desc">Livre sensoriel en tissu</div>
+                    <div class="item-meta">
+                        <span class="item-price">17,49 &euro;</span>
+                        <span class="item-qty">x1</span>
+                    </div>
+                </div>
+                <div class="item-card">
+                    <div class="item-icon">&#x1F9E9;</div>
+                    <div class="item-name">Cube d'activit&eacute;s Sunlight</div>
+                    <div class="item-desc">Cube sensoriel avec miroir et anneaux</div>
+                    <div class="item-meta">
+                        <span class="item-price">18,03 &euro;</span>
+                        <span class="item-qty">x1</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Essentials -->
+        <div class="essentials-note fade-in">
+            <h3>Produits du quotidien</h3>
+            <p>Certains produits essentiels sont aussi les bienvenus et seront utiles au fil des mois :</p>
+            <div class="essentials-items">
+                <span>&#x1F9F7; Couches</span>
+                <span>&#x1F95B; Lait infantile</span>
+                <span>&#x1F9F4; Produits de soin</span>
+                <span>&#x1F9F9; Lingettes</span>
+            </div>
+        </div>
+
+        <!-- Participations utiles -->
+        <div class="category fade-in" style="margin-top: 56px;">
+            <h3 class="category-title">Participations (tr&egrave;s) utiles</h3>
+            <div class="items-grid">
+                <div class="item-card">
+                    <div class="item-icon">&#x1F31C;</div>
+                    <div class="item-name">Participation nounou de nuit</div>
+                    <div class="item-desc">1 nuit = 120 euros</div>
+                    <div class="item-meta">
+                        <span class="item-price">120,00 &euro;</span>
+                        <span class="item-qty">par nuit</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <section class="footer">
+        <div class="footer-heart">&#x2764;&#xFE0F;</div>
+        <p>Merci du fond du c&oelig;ur de partager ce moment avec nous.</p>
+    </section>
+
+    <script>
+        // Fade-in on scroll
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+    </script>
+
+</body>
+</html>
